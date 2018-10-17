@@ -1,0 +1,11 @@
+node{
+    stage ('checkout'){
+        checkout([$class: 'GitSCM',
+            branches: scm.branches,
+            userRemoteConfigs: [[credentialsId: 'da1921fa-fcce-4008-84ee-354ac7983d68', url: 'https://github.com/skarindra/cucumber-ios.git', poll: true]]
+        ])
+    }
+    stage('Build'){
+        sh 'ls'
+    }
+}
