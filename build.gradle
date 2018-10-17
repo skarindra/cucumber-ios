@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+}
+
+plugins {
+    id 'java'
+    id 'com.github.spacialcircumstances.gradle-cucumber-reporting' version '0.0.15'
+}
+
+group 'com.project'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'io.appium', name: 'java-client', version: '6.1.0'
+    implementation 'io.cucumber:cucumber-java8:3.0.2'
+    implementation 'io.cucumber:cucumber-junit:3.0.2'
+    testImplementation 'io.cucumber:cucumber-core:3.0.2'
+    implementation 'io.rest-assured:rest-assured:3.1.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+}
+
+cucumberReports {
+    outputDir = file('./target/report')
+    reports = files('./target/cucumber.json')
+}
+
+
+test {
+    systemProperties = System.properties
+}
+
+clean.doFirst {
+    file('target').deleteDir()
+    file('appium.log').delete()
+    file('build').deleteDir()
+}
+
+task killAppium {
+    doLast {
+        exec {
+            commandLine 'killall','node'
+        }
+    }
+}
+
+test.finalizedBy(killAppium)
