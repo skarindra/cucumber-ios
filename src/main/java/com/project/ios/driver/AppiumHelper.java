@@ -43,9 +43,23 @@ public class AppiumHelper extends PropertyUtil {
 
     private static void setCapabilities()
     {
-        LOGGER.info("appPath :"+System.getProperty("appPath"));
-        String apkPathFilename = System.getProperty("user.dir") + "/" + System.getProperty("appPath");
-        app = new File(apkPathFilename);
+        String appName = "bl_ios.app";
+        String defaultAppPath = System.getProperty("user.home");
+        String appPath = System.getProperty("appPath");
+        String appPathFilename;
+
+        if(appPath!=null){
+            if(!appPath.endsWith("/")){
+                appPathFilename = appPath +"/"+ appName;
+            }else {
+                appPathFilename = appPath + appName;
+            }
+        }else {
+            appPathFilename = defaultAppPath +"/"+ appName;
+        }
+        app = new File(appPathFilename);
+
+        LOGGER.info("appPath :"+appPathFilename);
 
         try
         {
