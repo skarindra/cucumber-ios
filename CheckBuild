@@ -1,11 +1,12 @@
-node{
+properties([pipelineTriggers([pollSCM('* * * * *')])])
+node('localku'){
     stage ('checkout'){
         checkout([$class: 'GitSCM',
-            branches: scm.branches,
-            userRemoteConfigs: [[credentialsId: 'da1921fa-fcce-4008-84ee-354ac7983d68', url: 'https://github.com/skarindra/cucumber-ios.git', poll: true]]
+            branches: [[name: '*/master']],
+            userRemoteConfigs: [[credentialsId: 'ceb86c98-ffd0-4260-8c96-f7dd86fb3b86', url: 'git@github.com:skarindra/cucumber-ios.git', poll: true]]
         ])
     }
-    stage('Build'){
-        sh 'ls'
-    }
+    stage('Running Test'){
+            sh './gradlew clean test -Ddevice="iPhone 7" -DplatformVersion=10.2'
+        }
 }
