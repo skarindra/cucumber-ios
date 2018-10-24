@@ -1,5 +1,14 @@
-node('localku'){
-    stage('Running Test'){
-            sh 'ls'
-        }
+pipeline {
+	agent any
+	def device="iPhone 7"
+
+	stage('Running Test'){
+		agent {
+			label "localku"
+		}
+		steps {
+			echo 'Running important automation ...'
+      		sh './gradlew clean test -Ddevice='+device+' -DplatformVersion=10.2'
+		}
+	}
 }
