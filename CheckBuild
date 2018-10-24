@@ -1,4 +1,4 @@
-node('master'){
+node('localku'){
     stage('Running Test'){
             sh './gradlew clean test -Ddevice='+'"iPhone 7"'+' -DplatformVersion=10.2'
         }
