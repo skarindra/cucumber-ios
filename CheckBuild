@@ -1,6 +1,11 @@
 pipeline {
+	environment{
+		device = "iPhone 7"
+		platformVersion = "10.2"
+	}
+
 	agent any
-	def device='iPhone 7'
+
 	stages {
 		stage('Running Test'){
 			agent {
@@ -8,7 +13,7 @@ pipeline {
 			}
 			steps {
 				echo 'Running important automation ...'
-      			sh './gradlew clean test -Ddevice='+device+' -DplatformVersion=10.2'
+      			sh './gradlew clean test -Ddevice='+device+' -DplatformVersion='+platformVersion
 			}
 		}
 	}
