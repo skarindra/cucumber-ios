@@ -1,3 +1,4 @@
+@something
 Feature: Test
 
   Scenario: Test Something
