@@ -2,6 +2,7 @@ pipeline {
 	environment{
 		device = "iPhone 7"
 		platformVersion = "10.2"
+		tag = "--tags @something"
 	}
 
 	agent any
@@ -14,7 +15,7 @@ pipeline {
 			steps {
 				echo 'Running important automation ...'
 				sh 'ls'
-      				sh './gradlew clean test -Ddevice="'+device+'" -DplatformVersion='+platformVersion
+      				sh './gradlew clean test -Ddevice="'+device+'" -DplatformVersion='+platformVersion+' -Dcucumber.options="'+tag+'"'
 			}
 		}
 	}
